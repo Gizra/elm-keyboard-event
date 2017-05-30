@@ -1,0 +1,26 @@
+{
+  "name": "elm-keyboard-event",
+  "version": "1.0.0",
+  "description": "Decoders for keyboard events",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "elm": "^0.18.0"
+  },
+  "scripts": {
+    "test": "elm-make src/Keyboard/Event.elm"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gizra/elm-keyboard-event.git"
+  },
+  "author": "Ryan Rempel <ryan@gizra.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Gizra/elm-keyboard-event/issues"
+  },
+  "homepage": "https://github.com/Gizra/elm-keyboard-event#readme"
+}
