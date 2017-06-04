@@ -11,7 +11,7 @@
     "elm": "^0.18.0"
   },
   "scripts": {
-    "test": "elm-make src/Keyboard/Event.elm"
+    "test": "sh tests/compile.sh"
   },
   "repository": {
     "type": "git",
