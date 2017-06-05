@@ -1,6 +1,6 @@
 #! /bin/sh
 
-elm-make src/Keyboard/Event.elm
+elm-make --yes src/Keyboard/Event.elm
 pushd examples
-elm-make BasicExample.elm --output BasicExample.html
+elm-make --yes BasicExample.elm --output BasicExample.html
 popd
