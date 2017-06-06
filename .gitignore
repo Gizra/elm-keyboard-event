@@ -4,4 +4,4 @@ elm-stuff
 index.js
 index.html
 node_modules
-examples/*.html
+build

@@ -70,4 +70,4 @@ Try something like:
     npm install
     npm test
 
-You can then find the compiled examples in the `examples` folder.
+You can then find the compiled examples in the `build` folder.
