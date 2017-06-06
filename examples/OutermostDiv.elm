@@ -29,6 +29,9 @@ type alias Model =
     }
 
 
+{-| Note that we automatically focus on the outermost div, since
+the browser will only send keyboard events to a focused element.
+-}
 init : ( Model, Cmd Msg )
 init =
     ( { lastEvent = Nothing }
@@ -54,6 +57,8 @@ subscriptions model =
     Sub.none
 
 
+{-| Note that we use a `tabindex` to make the div focusable.
+-}
 view : Model -> Html Msg
 view model =
     div
@@ -165,6 +170,9 @@ type alias Model =
     }
 
 
+{-| Note that we automatically focus on the outermost div, since
+the browser will only send keyboard events to a focused element.
+-}
 init : ( Model, Cmd Msg )
 init =
     ( { lastEvent = Nothing }
@@ -190,6 +198,9 @@ subscriptions model =
     Sub.none
 
 
+
+{-| Note that we use a `tabindex` to make the div focusable.
+-}
 view : Model -> Html Msg
 view model =
     div
@@ -218,7 +229,7 @@ leftSide model =
         [ style
             [ ( "position", "absolute" )
             , ( "left", "0px" )
-            , ( "right", "35%" )
+            , ( "right", "65%" )
             , ( "height", "100%" )
             , ( "margin", "18px" )
             , ( "overflow", "hidden" )
