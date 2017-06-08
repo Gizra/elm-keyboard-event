@@ -37,9 +37,9 @@ div
 ```
 See the `examples` directory in the source code for complete examples.
 
-    * [Listen for events on an outermost div](https://gizra.github.io/elm-keyboard-event/OutermostDiv.html)
-    * [Listen for events on multiple divs](https://gizra.github.io/elm-keyboard-event/TwoDivs.html)
-    * [Listen for events on the `window` object](https://gizra.github.io/elm-keyboard-event/Window.html)
+  * [Listen for events on an outermost div](https://gizra.github.io/elm-keyboard-event/OutermostDiv.html)
+  * [Listen for events on multiple divs](https://gizra.github.io/elm-keyboard-event/TwoDivs.html)
+  * [Listen for events on the `window` object](https://gizra.github.io/elm-keyboard-event/Window.html)
 
 Note that an HTML element must be focused in order to receive keyboard events
 (unlike in [elm-lang/keyboard][keyboard-pkg], since it attaches a listener to the
@@ -60,7 +60,7 @@ can work around the need to focus, in this way:
 [dom-package]: http://package.elm-lang.org/packages/elm-lang/dom/latest
 
 Alternatively, the `examples` directory also
-[contains an example]((https://gizra.github.io/elm-keyboard-event/Window.html)
+[contains an example](https://gizra.github.io/elm-keyboard-event/Window.html)
 of subscribing to keyboard events on the `window` object, as
 [elm-lang/keyboard][keyboard-pkg] does, but supplying your own decoder instead
 of just getting the `KeyCode`. In that case, you can avoid the need to focus on
