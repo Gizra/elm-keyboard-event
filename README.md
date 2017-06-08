@@ -2,16 +2,27 @@
 
 # elm-keyboard-event
 
-Most Elm keyboard-related packages (such as [elm-lang/keyboard][], and
-others which build on it) are focused on installing a global handler for
-keyboard events, to which one subscribes as needed.
+Most Elm keyboard-related packages (such as [elm-lang/keyboard][keyboard-pkg], and
+others which build on it) only decode the `KeyCode` from Javascript's
+[keyboard event][keyboard-event] (possiby building up some additional state from the
+sequence of keycodes).
 
-[elm-lang/keyboard]: http://package.elm-lang.org/packages/elm-lang/keyboard/latest
+[keyboard-pkg]: http://package.elm-lang.org/packages/elm-lang/keyboard/latest
+[keyboard-event]: https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent
 
-An alternative approach would be to set up listeners for keyboard events in
-your `view` method, as one would ordinarily listen for HTML events in Elm.  To
-do that, you would need to decode the keyboard event which you will receive.
-This package provides such decoders, so you can do something like this:
+This ignores some potentially useful information reported in Javascript's
+[keyboard event][keyboard-event]:
+
+  * the state of modifier keys (such as the shift key)
+
+  * whether the event is a "repeated" keyboard event (due to a key being held
+    down)
+
+This package provides decoders for that additional information, and examples
+of using those decoders when listening for keyboard events on HTML elements,
+or the `window` object itself (as [elm-lang/keyboard][keyboard-pkg] does).
+
+To listen for keyboard events on HTML elements, you can do something like this:
 
 ```elm
 div
@@ -26,17 +37,8 @@ div
 ```
 See the `examples` directory in the source code for complete examples.
 
-Compared to using subscriptions, one advantage of this approach is that you get
-more information from the keyboard event than the `KeyCode` which
-[elm-lang/keyboard][] supplies:
-
-  * the state of modifier keys (such as the shift key)
-
-  * whether the event is a "repeated" keyboard event (due to a key being held
-    down)
-
 Note that an HTML element must be focused in order to receive keyboard events
-(unlike in [elm-lang/keyboard][], since it attaches a listener to the
+(unlike in [elm-lang/keyboard][keyboard-pkg], since it attaches a listener to the
 Javascript `window` object). This is either an advantage or a disadvantage,
 depending on your circumstances. If you want to handle keyboard events
 differently depending on what is focused, it is an advantage. Otherwise, you
@@ -48,10 +50,15 @@ can work around the need to focus, in this way:
   * possibly give it a style of `outline: none;` to avoid the default outline
     that would be drawn when the element is focused
 
-  * possibly use [elm-lang/dom][] to automatically focus the element when
+  * possibly use [elm-lang/dom][dom-package] to automatically focus the element when
     you initialize the page
 
-[elm-lang/dom]: http://package.elm-lang.org/packages/elm-lang/dom/latest
+[dom-package]: http://package.elm-lang.org/packages/elm-lang/dom/latest
+
+Alternatively, the `examples` directory also contains an example of subscribing
+to keyboard events on the `window` object, as [elm-lang/keyboard][keyboard-pkg] does, but
+supplying your own decoder instead of just getting the `KeyCode`. In that case,
+you can avoid the need to focus on any particular HTML element.
 
 ## API
 
