@@ -13,15 +13,17 @@ your `view` method, as one would ordinarily listen for HTML events in Elm.  To
 do that, you would need to decode the keyboard event which you will receive.
 This package provides such decoders, so you can do something like this:
 
-    div
-        [ on "keydown" <|
-            Json.Decode.map HandleKeyboardEvent decodeKeyboardEvent
-        , tabindex 0
-        , id "id-for-auto-focus"
-        , style [ ( "outline", "none" ) ]
-        ]
-        [ ... ]
+```elm
+div
+    [ on "keydown" <|
+        Json.Decode.map HandleKeyboardEvent decodeKeyboardEvent
+    , tabindex 0
+    , id "id-for-auto-focus"
+    , style [ ( "outline", "none" ) ]
+    ]
+    []
 
+```
 See the `examples` directory in the source code for complete examples.
 
 Compared to using subscriptions, one advantage of this approach is that you get
