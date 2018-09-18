@@ -3,7 +3,7 @@
     "name": "Gizra/elm-keyboard-event",
     "summary": "Decoders for keyboard events",
     "license": "MIT",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "exposed-modules": [
         "Keyboard.Event"
     ],
