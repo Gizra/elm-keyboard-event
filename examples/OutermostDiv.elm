@@ -275,8 +275,8 @@ rightSide =
         ]
         [ text source ]
 
+
 source : String
 source =
-    "not providing source here to avoid recursion!"
-
+    "To avoid inifinite recursion, we won't print the source here!"
 """
