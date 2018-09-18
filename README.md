@@ -2,25 +2,63 @@
 
 # elm-keyboard-event
 
-Most Elm keyboard-related packages (such as [elm-lang/keyboard][keyboard-pkg], and
-others which build on it) only decode the `KeyCode` from Javascript's
-[keyboard event][keyboard-event] (possiby building up some additional state from the
-sequence of keycodes).
+This module provides decoders for
+[keyboard events](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent)
+with several useful features:
 
-[keyboard-pkg]: http://package.elm-lang.org/packages/elm-lang/keyboard/latest
-[keyboard-event]: https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent
+- They preserve more information than just the
+  [keyCode](https://package.elm-lang.org/packages/elm/html/latest/Html-Events#keyCode).
 
-This ignores some potentially useful information reported in Javascript's
-[keyboard event][keyboard-event]:
+- They normalize some browser-specific quirks.
 
-  * the state of modifier keys (such as the shift key)
+- You can filter keyboard events right in the decoder (rather than sending
+  all events to your update function).
 
-  * whether the event is a "repeated" keyboard event (due to a key being held
-    down)
+## Background
 
-This package provides decoders for that additional information, and examples
-of using those decoders when listening for keyboard events on HTML elements,
-or the `window` object itself (as [elm-lang/keyboard][keyboard-pkg] does).
+There are various ways to listen to
+[keyboard events](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent)
+in Elm. If you want to get all keyboard events, you can subscribe using functions from
+[Browser.Events](https://package.elm-lang.org/packages/elm/browser/latest/Browser-Events).
+And, if you want to get keyboard events for specific HTML elements, you can use
+[Html.Events.on](https://package.elm-lang.org/packages/elm/html/latest/Html-Events#on).
+
+Each of those functions asks you to provide a `Decoder msg` to convert the
+keyboard event into a message your application can handle. To help you along
+the way, `Html.Events` has a handy 
+[keyCode](https://package.elm-lang.org/packages/elm/html/latest/Html-Events#keyCode)
+decoder. You can use it to turn the keyboard event into a keycode -- which you
+can then map into a message your app understands.
+
+However, there is more information available in a keyboard event than just the
+keycode. So, we provide a decoder which gives you all the available
+information:
+
+```elm
+type alias KeyboardEvent =
+    { altKey : Bool
+    , ctrlKey : Bool
+    , key : Maybe String
+    , keyCode : Key
+    , metaKey : Bool
+    , repeat : Bool
+    , shiftKey : Bool
+    }
+```
+
+Even better, we:
+
+- normalize some browser-specific quirks, such as where to look for the keyCode
+  (under "keyCode", "which" or "charCode")
+
+- turn the keyCode into a type-safe `Key` value.
+
+But wait, there's more! We also have a version of the keyboard event decoder
+which allows you to filter events right in the decoder. That way, you can
+prevent some events from reaching your update function at all, which can be
+useful in some scenarios.
+
+## Examples
 
 To listen for keyboard events on HTML elements, you can do something like this:
 
@@ -33,38 +71,23 @@ div
     , style [ ( "outline", "none" ) ]
     ]
     []
-
 ```
-See the `examples` directory in the source code for complete examples.
+
+We use the`tabIndex` attribute to make the element focusable, since an HTML
+element must be focusable in order to receive keyboard events. And, we provide
+an `id` in case we want to programmatically focus on the element, via
+[Browser.Dom.focus](https://package.elm-lang.org/packages/elm/browser/latest/Browser-Dom#focus).
+
+For complete examples, see:
 
   * [Listen for events on an outermost div](https://gizra.github.io/elm-keyboard-event/OutermostDiv.html)
   * [Listen for events on multiple divs](https://gizra.github.io/elm-keyboard-event/TwoDivs.html)
-  * [Listen for events on the `window` object](https://gizra.github.io/elm-keyboard-event/Window.html)
 
-Note that an HTML element must be focused in order to receive keyboard events
-(unlike in [elm-lang/keyboard][keyboard-pkg], since it attaches a listener to the
-Javascript `window` object). This is either an advantage or a disadvantage,
-depending on your circumstances. If you want to handle keyboard events
-differently depending on what is focused, it is an advantage. Otherwise, you
-can work around the need to focus, in this way:
+To listen for keyboard events globally, you can use functions from
+[Browser.Events](https://package.elm-lang.org/packages/elm/browser/latest/Browser-Events) 
+to subscribe to all keyboard events. For an example, see
 
-  * provide the element with a `tabindex` attribute (as demonstrated above),
-    so that it is focusable
-
-  * possibly give it a style of `outline: none;` to avoid the default outline
-    that would be drawn when the element is focused
-
-  * possibly use [elm-lang/dom][dom-package] to automatically focus the element when
-    you initialize the page
-
-[dom-package]: http://package.elm-lang.org/packages/elm-lang/dom/latest
-
-Alternatively, the `examples` directory also
-[contains an example](https://gizra.github.io/elm-keyboard-event/Window.html)
-of subscribing to keyboard events on the `window` object, as
-[elm-lang/keyboard][keyboard-pkg] does, but supplying your own decoder instead
-of just getting the `KeyCode`. In that case, you can avoid the need to focus on
-any particular HTML element.
+  * [Listen for events on the `document` object](https://gizra.github.io/elm-keyboard-event/Document.html)
 
 ## API
 
