@@ -1,4 +1,7 @@
-module Keyboard.Event exposing (KeyboardEvent, decodeKeyboardEvent, considerKeyboardEvent, KeyCode, decodeKeyCode, decodeKey)
+module Keyboard.Event exposing
+    ( KeyboardEvent, decodeKeyboardEvent, considerKeyboardEvent
+    , KeyCode, decodeKeyCode, decodeKey
+    )
 
 {-| Most Elm keyboard-related packages (such as [elm-lang/keyboard][keyboard-pkg], and
 others which build on it) only decode the `KeyCode` from Javascript's
@@ -78,7 +81,7 @@ Some lower-level helpers that you might find useful.
 
 -}
 
-import Json.Decode exposing (Decoder, map, map7, int, field, oneOf, andThen, maybe, succeed, fail, bool, string)
+import Json.Decode exposing (Decoder, andThen, bool, fail, field, int, map, map7, maybe, oneOf, string, succeed)
 import Keyboard.Key exposing (Key, fromCode)
 import String
 
@@ -116,6 +119,7 @@ decodeNonZero =
         (\code ->
             if code == 0 then
                 fail "code was zero"
+
             else
                 succeed code
         )
@@ -135,6 +139,7 @@ decodeKey =
             (\key ->
                 if String.isEmpty key then
                     fail "empty key"
+
                 else
                     succeed key
             )

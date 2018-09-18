@@ -1,17 +1,17 @@
-module Main exposing (..)
+module Main exposing (Model, Msg(..), Target(..), init, leftSide, main, rightSide, source, subscriptions, update, view, viewEvent)
 
-import Dom
-import Html exposing (Html, Attribute, p, div, h1, h3, text, program, pre)
-import Html.Attributes exposing (tabindex, id, style)
+import Browser exposing (element)
+import Html exposing (Attribute, Html, div, h1, h3, p, pre, text)
+import Html.Attributes exposing (id, style, tabindex)
 import Html.Events exposing (on)
 import Json.Decode as Json
 import Keyboard.Event exposing (KeyboardEvent, decodeKeyboardEvent)
 import Task
 
 
-main : Program Never Model Msg
+main : Program Flags Model Msg
 main =
-    program
+    element
         { init = init
         , update = update
         , subscriptions = subscriptions
@@ -35,8 +35,12 @@ type alias Model =
     }
 
 
-init : ( Model, Cmd Msg )
-init =
+type alias Flags =
+    {}
+
+
+init : Flags -> ( Model, Cmd Msg )
+init _ =
     ( { lastTopEvent = Nothing
       , lastBottomEvent = Nothing
       }
@@ -71,13 +75,11 @@ subscriptions model =
 view : Model -> Html Msg
 view model =
     div
-        [ style
-            [ ( "position", "absolute" )
-            , ( "height", "100%" )
-            , ( "width", "100%" )
-            , ( "overflow", "hidden" )
-            , ( "outline", "none" )
-            ]
+        [ style "position" "absolute"
+        , style "height" "100%"
+        , style "width" "100%"
+        , style "overflow" "hidden"
+        , style "outline" "none"
         ]
         [ div []
             [ leftSide model
@@ -89,14 +91,12 @@ view model =
 leftSide : Model -> Html Msg
 leftSide model =
     div
-        [ style
-            [ ( "position", "absolute" )
-            , ( "left", "0px" )
-            , ( "right", "65%" )
-            , ( "height", "100%" )
-            , ( "margin", "18px" )
-            , ( "overflow", "hidden" )
-            ]
+        [ style "position" "absolute"
+        , style "left" "0px"
+        , style "right" "65%"
+        , style "height" "100%"
+        , style "margin" "18px"
+        , style "overflow" "hidden"
         ]
         [ h1 [] [ text "Two Divs" ]
         , h3 [] [ text "An example of attaching a keydown listener to multiple divs." ]
@@ -117,49 +117,45 @@ viewEvent target maybeEvent =
                 Bottom ->
                     1
 
-        viewEvent =
+        viewMaybeEvent =
             case maybeEvent of
                 Just event ->
                     pre []
                         [ text <|
                             String.join "\n"
-                                [ "altKey: " ++ toString event.altKey
-                                , "ctrlKey: " ++ toString event.ctrlKey
-                                , "key: " ++ toString event.key
-                                , "keyCode: " ++ toString event.keyCode
-                                , "metaKey: " ++ toString event.metaKey
-                                , "repeat: " ++ toString event.repeat
-                                , "shiftKey: " ++ toString event.shiftKey
+                                [ "altKey: " ++ Debug.toString event.altKey
+                                , "ctrlKey: " ++ Debug.toString event.ctrlKey
+                                , "key: " ++ Debug.toString event.key
+                                , "keyCode: " ++ Debug.toString event.keyCode
+                                , "metaKey: " ++ Debug.toString event.metaKey
+                                , "repeat: " ++ Debug.toString event.repeat
+                                , "shiftKey: " ++ Debug.toString event.shiftKey
                                 ]
                         ]
 
                 Nothing ->
                     p [] [ text "No event yet" ]
     in
-        div
-            [ style
-                [ ( "height", "200px" )
-                , ( "margin", "12px" )
-                , ( "padding", "12px" )
-                , ( "border", "1px dotted red" )
-                ]
-            , tabindex index
-            , on "keydown" (Json.map (HandleKeyboardEvent target) decodeKeyboardEvent)
-            ]
-            [ viewEvent ]
+    div
+        [ style "height" "200px"
+        , style "margin" "12px"
+        , style "padding" "12px"
+        , style "border" "1px dotted red"
+        , tabindex index
+        , on "keydown" (Json.map (HandleKeyboardEvent target) decodeKeyboardEvent)
+        ]
+        [ viewMaybeEvent ]
 
 
 rightSide : Html Msg
 rightSide =
     pre
-        [ style
-            [ ( "position", "absolute" )
-            , ( "left", "35%" )
-            , ( "right", "0px" )
-            , ( "height", "100%" )
-            , ( "margin", "18px" )
-            , ( "overflow", "auto" )
-            ]
+        [ style "position" "absolute"
+        , style "left" "35%"
+        , style "right" "0px"
+        , style "height" "100%"
+        , style "margin" "18px"
+        , style "overflow" "auto"
         ]
         [ text source ]
 
@@ -167,20 +163,20 @@ rightSide =
 source : String
 source =
     """
-module Main exposing (..)
+module Main exposing (Model, Msg(..), Target(..), init, leftSide, main, rightSide, source, subscriptions, update, view, viewEvent)
 
-import Dom
-import Html exposing (Html, Attribute, p, div, h1, h3, text, program, pre)
-import Html.Attributes exposing (tabindex, id, style)
+import Browser exposing (element)
+import Html exposing (Attribute, Html, div, h1, h3, p, pre, text)
+import Html.Attributes exposing (id, style, tabindex)
 import Html.Events exposing (on)
 import Json.Decode as Json
 import Keyboard.Event exposing (KeyboardEvent, decodeKeyboardEvent)
 import Task
 
 
-main : Program Never Model Msg
+main : Program Flags Model Msg
 main =
-    program
+    element
         { init = init
         , update = update
         , subscriptions = subscriptions
@@ -204,8 +200,12 @@ type alias Model =
     }
 
 
-init : ( Model, Cmd Msg )
-init =
+type alias Flags =
+    {}
+
+
+init : Flags -> ( Model, Cmd Msg )
+init _ =
     ( { lastTopEvent = Nothing
       , lastBottomEvent = Nothing
       }
@@ -240,13 +240,11 @@ subscriptions model =
 view : Model -> Html Msg
 view model =
     div
-        [ style
-            [ ( "position", "absolute" )
-            , ( "height", "100%" )
-            , ( "width", "100%" )
-            , ( "overflow", "hidden" )
-            , ( "outline", "none" )
-            ]
+        [ style "position" "absolute"
+        , style "height" "100%"
+        , style "width" "100%"
+        , style "overflow" "hidden"
+        , style "outline" "none"
         ]
         [ div []
             [ leftSide model
@@ -258,14 +256,12 @@ view model =
 leftSide : Model -> Html Msg
 leftSide model =
     div
-        [ style
-            [ ( "position", "absolute" )
-            , ( "left", "0px" )
-            , ( "right", "65%" )
-            , ( "height", "100%" )
-            , ( "margin", "18px" )
-            , ( "overflow", "hidden" )
-            ]
+        [ style "position" "absolute"
+        , style "left" "0px"
+        , style "right" "65%"
+        , style "height" "100%"
+        , style "margin" "18px"
+        , style "overflow" "hidden"
         ]
         [ h1 [] [ text "Two Divs" ]
         , h3 [] [ text "An example of attaching a keydown listener to multiple divs." ]
@@ -286,54 +282,51 @@ viewEvent target maybeEvent =
                 Bottom ->
                     1
 
-        viewEvent =
+        viewMaybeEvent =
             case maybeEvent of
                 Just event ->
                     pre []
                         [ text <|
-                            String.join "\\n"
-                                [ "altKey: " ++ toString event.altKey
-                                , "ctrlKey: " ++ toString event.ctrlKey
-                                , "key: " ++ toString event.key
-                                , "keyCode: " ++ toString event.keyCode
-                                , "metaKey: " ++ toString event.metaKey
-                                , "repeat: " ++ toString event.repeat
-                                , "shiftKey: " ++ toString event.shiftKey
+                            String.join "
+"
+                                [ "altKey: " ++ Debug.toString event.altKey
+                                , "ctrlKey: " ++ Debug.toString event.ctrlKey
+                                , "key: " ++ Debug.toString event.key
+                                , "keyCode: " ++ Debug.toString event.keyCode
+                                , "metaKey: " ++ Debug.toString event.metaKey
+                                , "repeat: " ++ Debug.toString event.repeat
+                                , "shiftKey: " ++ Debug.toString event.shiftKey
                                 ]
                         ]
 
                 Nothing ->
                     p [] [ text "No event yet" ]
     in
-        div
-            [ style
-                [ ( "height", "200px" )
-                , ( "margin", "12px" )
-                , ( "padding", "12px" )
-                , ( "border", "1px dotted red" )
-                ]
-            , tabindex index
-            , on "keydown" (Json.map (HandleKeyboardEvent target) decodeKeyboardEvent)
-            ]
-            [ viewEvent ]
+    div
+        [ style "height" "200px"
+        , style "margin" "12px"
+        , style "padding" "12px"
+        , style "border" "1px dotted red"
+        , tabindex index
+        , on "keydown" (Json.map (HandleKeyboardEvent target) decodeKeyboardEvent)
+        ]
+        [ viewMaybeEvent ]
 
 
 rightSide : Html Msg
 rightSide =
     pre
-        [ style
-            [ ( "position", "absolute" )
-            , ( "left", "35%" )
-            , ( "right", "0px" )
-            , ( "height", "100%" )
-            , ( "margin", "18px" )
-            , ( "overflow", "auto" )
-            ]
+        [ style "position" "absolute"
+        , style "left" "35%"
+        , style "right" "0px"
+        , style "height" "100%"
+        , style "margin" "18px"
+        , style "overflow" "auto"
         ]
         [ text source ]
 
-
 source : String
 source =
-    "To avoid infinite recursion, I shall not repeat the source here."
+    "to avoid recursion, I won't print the source here!"
+
 """
