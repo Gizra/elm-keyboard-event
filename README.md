@@ -25,7 +25,7 @@ And, if you want to get keyboard events for specific HTML elements, you can use
 
 Each of those functions asks you to provide a `Decoder msg` to convert the
 keyboard event into a message your application can handle. To help you along
-the way, `Html.Events` has a handy 
+the way, `Html.Events` has a handy
 [keyCode](https://package.elm-lang.org/packages/elm/html/latest/Html-Events#keyCode)
 decoder. You can use it to turn the keyboard event into a keycode -- which you
 can then map into a message your app understands.
@@ -51,7 +51,8 @@ Even better, we:
 - normalize some browser-specific quirks, such as where to look for the keyCode
   (under "keyCode", "which" or "charCode")
 
-- turn the keyCode into a type-safe `Key` value.
+- turn the keyCode into a type-safe `Key` value using the package
+  [SwiftsNamesake/proper-keyboard](https://package.elm-lang.org/packages/SwiftsNamesake/proper-keyboard/latest/)
 
 But wait, there's more! We also have a version of the keyboard event decoder
 which allows you to filter events right in the decoder. That way, you can
@@ -84,7 +85,7 @@ For complete examples, see:
   * [Listen for events on multiple divs](https://gizra.github.io/elm-keyboard-event/TwoDivs.html)
 
 To listen for keyboard events globally, you can use functions from
-[Browser.Events](https://package.elm-lang.org/packages/elm/browser/latest/Browser-Events) 
+[Browser.Events](https://package.elm-lang.org/packages/elm/browser/latest/Browser-Events)
 to subscribe to all keyboard events. For an example, see
 
   * [Listen for events on the `document` object](https://gizra.github.io/elm-keyboard-event/Document.html)
@@ -95,9 +96,12 @@ For the detailed API, see the
 [Elm package site](http://package.elm-lang.org/packages/Gizra/elm-keyboard-event/latest),
 or the links to the right, if you're already there.
 
+Note: This package uses [`Keyboard.Key`](https://package.elm-lang.org/packages/SwiftsNamesake/proper-keyboard/latest/Keyboard-Key)
+from the package [SwiftsNamesake/proper-keyboard](https://package.elm-lang.org/packages/SwiftsNamesake/proper-keyboard/latest/).
+
 ## Installation
 
-Try `elm-package install Gizra/elm-keyboard-event`
+Try `elm install Gizra/elm-keyboard-event`
 
 ## Development
 
